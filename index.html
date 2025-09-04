@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FIDE Grand Swiss 2025 – Player Tracker</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <header>
+    <h1>FIDE Grand Swiss 2025 – Player Tracker</h1>
+    <p class="muted">Source: Lichess Broadcast (PGN). Updates every 20s.</p>
+  </header>
+
+  <main class="card">
+    <div class="toolbar">
+      <button id="refresh">Refresh now</button>
+      <p id="status" class="muted"></p>
+    </div>
+
+    <div id="resultBox" class="result">
+      <h2>Players</h2>
+      <div id="resultContent">—</div>
+    </div>
+  </main>
+
+  <section class="card">
+    <h2>Team progress (cumulative points)</h2>
+    <div class="chart-wrap">
+      <canvas id="teamsChart"></canvas>
+    </div>
+  </section>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="./config.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

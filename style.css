@@ -1,0 +1,119 @@
+:root {
+  --bg: #f9fafb;
+  --fg: #111827;
+  --muted: #6b7280;
+  --card: #ffffff;
+  --line: #e5e7eb;
+  --accent: #2563eb;
+}
+
+/* Lock the page: no scrollbars */
+html, body {
+  height: 100%;
+  overflow: hidden;       /* no vertical or horizontal scroll */
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 24px;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+h1 { margin: 0 0 8px; }
+h2 { margin: 8px 0; }
+.muted { color: var(--muted); }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px auto;
+  max-width: 1200px;
+}
+
+.result {
+  border-left: 4px solid var(--accent);
+  padding-left: 12px;
+}
+
+button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+}
+button:hover { opacity: .95; }
+
+.toolbar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Two player columns */
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.columns ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.columns li { margin-bottom: 8px; }
+
+/* Team headings & totals */
+.team-title {
+  font-weight: 800;
+  margin: 0 0 8px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.team-title.bru { color: var(--accent); }   /* blue */
+.team-title.juani { color: #f59e0b; }      /* orange */
+
+.team-total {
+  margin-top: 8px;
+  font-weight: 700;
+}
+.team-total.bru { color: var(--accent); }
+.team-total.juani { color: #b45309; }      /* darker orange */
+
+/* Collapsible games list */
+.player-header {
+  cursor: pointer;
+  padding: 4px 0;
+  font-weight: bold;
+}
+.player-header:hover { color: var(--accent); }
+
+.player-games {
+  margin: 4px 0 8px 20px;
+  font-size: 0.9em;
+  color: var(--muted);
+}
+.hidden { display: none; }
+
+/* Chart: fixed vertical size inside wrapper */
+.chart-wrap {
+  width: 100%;
+  height: 320px;          /* fixed height */
+  max-height: 320px;
+  overflow: hidden;       /* guard against internal overflow */
+}
+#teamsChart {
+  display: block;
+  width: 100%;
+  height: 100%;           /* canvas fills wrapper */
+}
+
+/* Safety: avoid horizontal overflow */
+body, .card { max-width: 100vw; }
