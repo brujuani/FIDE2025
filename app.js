@@ -125,8 +125,8 @@ function updateTeamsChart(labels, leftCum, rightCum) {
     data: {
       labels,
       datasets: [
-        { label: "Left team (Top 4)", data: leftCum, borderColor: "#2563eb", backgroundColor: "rgba(37,99,235,0.1)", tension: 0.2, fill: false },
-        { label: "Right team (Top 4)", data: rightCum, borderColor: "#f59e0b", backgroundColor: "rgba(245,158,11,0.1)", tension: 0.2, fill: false }
+        { label: "BRU TEAM", data: leftCum, borderColor: "#2563eb", backgroundColor: "rgba(37,99,235,0.1)", tension: 0.2, fill: false },
+        { label: "JUANI TEAM", data: rightCum, borderColor: "#f59e0b", backgroundColor: "rgba(245,158,11,0.1)", tension: 0.2, fill: false }
       ]
     },
     options: {
@@ -289,3 +289,4 @@ async function tick() {
 refreshBtn.addEventListener("click", tick);
 tick();
 setInterval(tick, 20000);
+
