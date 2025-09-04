@@ -1,4 +1,8 @@
-// --- OPEN event PGN URLs ---
+/* ===========================
+   PGN URL lists
+   =========================== */
+
+// OPEN event PGNs (ya las tenías)
 window.OPEN_PGN_URLS = [
   "https://lichess.org/broadcast/fide-grand-swiss-2025--open/round-1/xSCoiNg0.pgn",
   "https://lichess.org/broadcast/fide-grand-swiss-2025--open/round-2/UnZivDF9.pgn",
@@ -13,8 +17,7 @@ window.OPEN_PGN_URLS = [
   "https://lichess.org/broadcast/fide-grand-swiss-2025--open/round-11/pAVa5HIv.pgn"
 ];
 
-// --- WOMEN event PGN URLs ---
-// TODO: PUT THE REAL URLS HERE (pattern below is typical but ids differ!)
+// WOMEN event PGNs (pon aquí los reales; deja vacío si aún no los tienes)
 window.WOMEN_PGN_URLS = [
   "https://lichess.org/broadcast/fide-grand-swiss-2025--women/round-1/SwdwlpSh.pgn",
   "https://lichess.org/broadcast/fide-grand-swiss-2025--women/round-2/coXhoCAD.pgn",
@@ -29,10 +32,30 @@ window.WOMEN_PGN_URLS = [
   "https://lichess.org/broadcast/fide-grand-swiss-2025--women/round-11/eOraDcpQ.pgn"
 ];
 
-// Proxy versions (if you use server.js to bypass CORS)
-window.OPEN_PGN_URLS_PROXY = window.OPEN_PGN_URLS.map(
-  u => "http://localhost:3000/proxy-pgn?url=" + encodeURIComponent(u)
-);
-window.WOMEN_PGN_URLS_PROXY = window.WOMEN_PGN_URLS.map(
-  u => "http://localhost:3000/proxy-pgn?url=" + encodeURIComponent(u)
-);
+/* ===========================
+   Proxy selection by environment
+   ===========================
+
+   - En LOCAL (http://localhost:3000): proxy local (server.js)
+   - En VERCEL: mismo dominio /api/proxy-pgn
+   - En GITHUB PAGES: proxy remoto en Vercel -> cambia YOUR-VERCEL-APP por tu nombre real
+*/
+const host = location.hostname;
+const isLocal = host === "localhost" || host === "127.0.0.1";
+const isVercel = host.endsWith(".vercel.app");
+const isGitHubPages = host.endsWith(".github.io");
+
+// CAMBIA ESTO tras crear tu proyecto en Vercel
+const YOUR_VERCEL = "https://YOUR-VERCEL-APP.vercel.app";
+
+const PROXY_BASE = isLocal
+  ? "http://localhost:3000/proxy-pgn?url="
+  : isVercel
+    ? "/api/proxy-pgn?url="
+    : isGitHubPages
+      ? `${YOUR_VERCEL}/api/proxy-pgn?url=`
+      : "/api/proxy-pgn?url="; // fallback
+
+// Listas proxificadas
+window.OPEN_PGN_URLS_PROXY  = window.OPEN_PGN_URLS.map(u  => PROXY_BASE + encodeURIComponent(u));
+window.WOMEN_PGN_URLS_PROXY = window.WOMEN_PGN_URLS.map(u => PROXY_BASE + encodeURIComponent(u));
