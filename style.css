@@ -8,7 +8,7 @@
 }
 
 /* Lock the page: no scrollbars */
-html, body { height: 100%; overflow: hidden; }
+html, body { height: 100%; }
 
 * { box-sizing: border-box; }
 
@@ -64,3 +64,4 @@ button:hover { opacity: .95; }
 
 /* Safety: avoid horizontal overflow */
 body, .card { max-width: 100vw; }
+
