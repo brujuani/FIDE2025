@@ -169,8 +169,11 @@ async function tick() {
           const start = roundStartDate(games);
           if (start && start > now) continue;
           if (!start) {
-            const any = games.some(g => g.headers.Result && g.headers.Result !== "*");
-            if (!any) continue;
+            const anyFinished = games.some(g => g.headers.Result && g.headers.Result !== "*");
+            if (!anyFinished) {
+              const hasPairings = games.some(g => g.headers.White && g.headers.Black);
+              if (!hasPairings) continue; 
+            }
           }
 
           const rLab = onlyRound(games[0]?.headers?.Round);
@@ -247,15 +250,23 @@ async function tick() {
     function renderList(list) {
       return "<ul>" + list.map(p => {
         const elo = (playerInfo[p]?.elo) || "—";
-        const pts = fmtPts(points[p] || 0);
+        const hasOngoing = (gamesByPlayer[p] || []).some(
+          g => g.result === "Ongoing" || g.result === "En juego"
+        );
+        const pts = fmtPts(points[p] || 0) + " pts" + (hasOngoing ? " (*)" : "");
         const code = countryMap[p] || "";
-        const flag = code ? `<img src="https://flagcdn.com/24x18/${code}.png" alt="${code}" style="vertical-align:middle;margin-right:6px" /> ` : "";
-        const games = (gamesByPlayer[p] || []).map(g => `<li>Round ${g.round}: ${g.color} vs ${g.rival} → ${g.result}</li>`).join("");
+        const flagHtml = code
+          ? `<img src="https://flagcdn.com/24x18/${code}.png" alt="${code}" style="vertical-align:middle;margin-right:6px" /> `
+          : "";
+        const games = (gamesByPlayer[p] || []).map(g =>
+          `<li>Round ${g.round}: ${g.color} vs ${g.rival} → ${g.result}</li>`
+        ).join("");
         return `
           <li class="player">
-            <div class="player-header">${flag}${p} (${elo}) - ${pts} pts</div>
+            <div class="player-header">${flagHtml}${p} (${elo}) - ${pts}</div>
             <ul class="player-games hidden">${games}</ul>
-          </li>`;
+          </li>
+        `;
       }).join("") + "</ul>";
     }
 
@@ -289,4 +300,5 @@ async function tick() {
 refreshBtn.addEventListener("click", tick);
 tick();
 setInterval(tick, 20000);
+
 
